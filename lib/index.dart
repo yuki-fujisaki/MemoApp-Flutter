@@ -45,6 +45,20 @@ class _MyHomePageState extends State<MyHomePage> {
                 controller: _myController,
               ),
             ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: _items.length,
+                itemBuilder: (_, int index) {
+                  final item = _items[index];
+
+                  return Card(
+                    child: ListTile(
+                      title: Text(_items[index]),
+                    ),
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),
