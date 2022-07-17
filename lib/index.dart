@@ -19,6 +19,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final _myController = TextEditingController();
   // データ格納用リスト
   List<Memo> _memos = [];
+  bool isEditing = false;
 
   @override
   void initState() {
@@ -98,6 +99,24 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Memo App'),
+        actions: [
+          TextButton(
+            child: isEditing
+                ? const Text(
+                    'キャンセル',
+                    style: TextStyle(fontSize: 20, color: Colors.white),
+                  )
+                : const Text(
+                    '選択',
+                    style: TextStyle(fontSize: 20, color: Colors.white),
+                  ),
+            onPressed: () {
+              print('クリックされました');
+              setState(() => isEditing = !isEditing);
+              print('${isEditing}');
+            },
+          )
+        ],
       ),
       body: Container(
         child: Column(
