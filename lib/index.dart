@@ -21,6 +21,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _deleteItem(_i) {
+    setState(() {
+      _items.removeAt(_i);
+    });
+  }
+
   @override
   // widgetの破棄時にコントローラも破棄する
   void dispose() {
@@ -51,9 +57,24 @@ class _MyHomePageState extends State<MyHomePage> {
                 itemBuilder: (_, int index) {
                   final item = _items[index];
 
-                  return Card(
-                    child: ListTile(
-                      title: Text(_items[index]),
+                  return Dismissible(
+                    key: ObjectKey(item),
+                    onDismissed: (direction) {
+                      _deleteItem(index);
+                    },
+                    direction: DismissDirection.endToStart,
+                    background: Container(
+                      alignment: Alignment.centerRight,
+                      color: Colors.red,
+                      child: const Icon(
+                        Icons.delete,
+                        color: Colors.white,
+                      ),
+                    ),
+                    child: Card(
+                      child: ListTile(
+                        title: Text(_items[index]),
+                      ),
                     ),
                   );
                 },
