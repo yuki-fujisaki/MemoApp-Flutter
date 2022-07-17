@@ -110,6 +110,41 @@ class _MyHomePageState extends State<MyHomePage> {
                 controller: _myController,
               ),
             ),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text('作成日時'),
+                ElevatedButton(
+                  child: const Text('昇順'),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.orange,
+                    onPrimary: Colors.white,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _memos.sort(
+                          (a, b) => a.createdTime.compareTo(b.createdTime));
+                      print('sorted');
+                    });
+                  },
+                ),
+                ElevatedButton(
+                  child: const Text('降順'),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.orange,
+                    onPrimary: Colors.white,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _memos.sort(
+                          (a, b) => b.createdTime.compareTo(a.createdTime));
+                      print('sorted');
+                    });
+                  },
+                ),
+              ],
+            ),
             Expanded(
               child: ListView.builder(
                 itemCount: _memos.length,
