@@ -152,6 +152,9 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: const EdgeInsets.all(16.0),
               child: TextField(
                 controller: _myController,
+                decoration: InputDecoration(
+                  hintText: "投稿する文字を入力してください",
+                ),
               ),
             ),
             // 検索用テキストフィールド
@@ -159,6 +162,9 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: const EdgeInsets.all(16.0),
               child: TextField(
                 onChanged: search,
+                decoration: InputDecoration(
+                  hintText: "検索する文字を入力してください",
+                ),
               ),
             ),
 
