@@ -14,17 +14,21 @@ class Memo {
     this.content = '',
     required this.createdTime,
     required this.updatedTime,
+    this.isSelected = false,
   });
 
   String content;
   DateTime createdTime;
   DateTime updatedTime;
+  bool isSelected;
 
-  Map<String, dynamic> toJson(String stringCreatedTime, String stringUpdatedTime) {
+  Map<String, dynamic> toJson(
+      String stringCreatedTime, String stringUpdatedTime) {
     return {
       'content': content,
       'createdTime': stringCreatedTime,
       'updatedTime': stringUpdatedTime,
+      'isSelected': isSelected,
     };
   }
 
@@ -33,6 +37,7 @@ class Memo {
       content: json['content'],
       createdTime: getDateTime(json['createdTime']),
       updatedTime: getDateTime(json['updatedTime']),
+      isSelected: json['isSelected'],
     );
   }
 }
