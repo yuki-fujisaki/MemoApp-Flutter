@@ -138,7 +138,41 @@ class _MyHomePageState extends State<MyHomePage> {
                   onPressed: () {
                     setState(() {
                       _memos.sort(
-                          (a, b) => b.createdTime.compareTo(a.createdTime));
+                          (a, b) => b.createdTime.compareTo(a.updatedTime));
+                      print('sorted');
+                    });
+                  },
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                const Text('編集日時'),
+                ElevatedButton(
+                  child: const Text('昇順'),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue,
+                    onPrimary: Colors.white,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _memos.sort(
+                          (a, b) => a.updatedTime.compareTo(b.updatedTime));
+                      print('sorted');
+                    });
+                  },
+                ),
+                ElevatedButton(
+                  child: const Text('降順'),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue,
+                    onPrimary: Colors.white,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _memos.sort(
+                          (a, b) => b.updatedTime.compareTo(a.updatedTime));
                       print('sorted');
                     });
                   },
