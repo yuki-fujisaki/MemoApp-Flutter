@@ -36,6 +36,10 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 
+  // ##############################################################
+  // on〇〇処理
+
+// 投稿機能
   void _addItem(String _inputtext) {
     setState(() {
       Memo memo = Memo(
@@ -48,6 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+// 削除機能
   void _deleteItem(_i) {
     setState(() {
       _memos.removeAt(_i);
@@ -55,6 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+// 選択削除機能
   void _deleteSelectedItem() {
     setState(() {
       _memos = _memos.where((e) => !e.isSelected).toList();
@@ -62,6 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+// 検索機能
   void search(String text) {
     setState(() {
       if (text.trim().isEmpty) {
@@ -71,6 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
       }
     });
   }
+  // ##############################################################
 
   // DateTime→String
   String getDateTimeToString(DateTime now) {
@@ -119,6 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
   // ##############################################################
 
+  // UI
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -147,7 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // テキストフィールド
+            // 投稿用テキストフィールド
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: TextField(
@@ -195,7 +204,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   onPressed: () {
                     setState(() {
                       _memos.sort(
-                          (a, b) => b.createdTime.compareTo(a.updatedTime));
+                          (a, b) => b.createdTime.compareTo(a.createdTime));
                       print('sorted');
                     });
                   },
@@ -236,6 +245,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ],
             ),
+            // リストビュー
             Expanded(
               child: ListView.builder(
                 itemCount: searchedNames.length != 0
@@ -294,21 +304,18 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: Column(
-        verticalDirection: VerticalDirection.up, // childrenの先頭を下に配置
+        verticalDirection: VerticalDirection.up,
         mainAxisSize: MainAxisSize.min,
         children: [
           FloatingActionButton(
-            // onPressedでボタンが押されたらテキストフィールドの内容を取得して、アイテムに追加
             onPressed: () {
               _addItem(_myController.text);
-              // テキストフィールドの内容をクリア
               _myController.clear();
             },
             child: const Icon(Icons.add),
           ),
           isEditing
               ? Container(
-                  // 余白のためContainerでラップ
                   margin: EdgeInsets.only(bottom: 16.0),
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
