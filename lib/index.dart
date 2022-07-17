@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:memo_app_flutter/edit.dart';
 import 'package:memo_app_flutter/model/memo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -131,6 +132,14 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: ListTile(
                         title: Text(_memos[index].content),
                         trailing: Text('${item.createdTime}'),
+                        onTap: () async {
+                          await Navigator.push(
+                              _,
+                              MaterialPageRoute(
+                                builder: (context) => EditPage(item, index),
+                              ));
+                          _getData();
+                        },
                       ),
                     ),
                   );

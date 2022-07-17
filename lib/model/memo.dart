@@ -18,10 +18,10 @@ class Memo {
   String content;
   DateTime createdTime;
 
-  Map<String, dynamic> toJson(String stringCreateTime) {
+  Map<String, dynamic> toJson(String stringCreatedTime) {
     return {
       'content': content,
-      'createTime': stringCreateTime,
+      'createTime': stringCreatedTime,
     };
   }
 
