@@ -38,6 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
       Memo memo = Memo(
         content: _inputtext,
         createdTime: DateTime.now(),
+        updatedTime: DateTime.now(),
       );
       _memos.add(memo);
       _saveData();
@@ -65,7 +66,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> _saveData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String> memoJson = _memos
-        .map((e) => json.encode(e.toJson(getDateTimeToString(e.createdTime))))
+        .map((e) => json.encode(e.toJson(getDateTimeToString(e.createdTime),
+            getDateTimeToString(e.updatedTime))))
         .toList();
     print('Setting json $memoJson');
     await prefs.setStringList('memo', memoJson);
