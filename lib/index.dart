@@ -19,6 +19,8 @@ class _MyHomePageState extends State<MyHomePage> {
   final _myController = TextEditingController();
   // データ格納用リスト
   List<Memo> _memos = [];
+  // 検索用データ格納リスト
+  List<Memo> searchedNames = [];
   bool isEditing = false;
 
   @override
@@ -57,6 +59,16 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _memos = _memos.where((e) => !e.isSelected).toList();
       _saveData();
+    });
+  }
+
+  void search(String text) {
+    setState(() {
+      if (text.trim().isEmpty) {
+        searchedNames = _memos;
+      } else {
+        searchedNames = _memos.where((e) => e.content == text).toList();
+      }
     });
   }
 
@@ -226,9 +238,13 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: _memos.length,
+                itemCount: searchedNames.length != 0
+                    ? searchedNames.length
+                    : _memos.length,
                 itemBuilder: (_, int index) {
-                  final item = _memos[index];
+                  final item = searchedNames.length != 0
+                      ? searchedNames[index]
+                      : _memos[index];
 
                   return Dismissible(
                     key: ObjectKey(item),
