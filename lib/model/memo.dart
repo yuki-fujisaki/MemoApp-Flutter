@@ -13,22 +13,26 @@ class Memo {
   Memo({
     this.content = '',
     required this.createdTime,
+    required this.updatedTime,
   });
 
   String content;
   DateTime createdTime;
+  DateTime updatedTime;
 
-  Map<String, dynamic> toJson(String stringCreatedTime) {
+  Map<String, dynamic> toJson(String stringCreatedTime, String stringUpdatedTime) {
     return {
       'content': content,
-      'createTime': stringCreatedTime,
+      'createdTime': stringCreatedTime,
+      'updatedTime': stringUpdatedTime,
     };
   }
 
   static Memo fromJson(Map<String, dynamic> json) {
     return Memo(
       content: json['content'],
-      createdTime: getDateTime(json['createTime']),
+      createdTime: getDateTime(json['createdTime']),
+      updatedTime: getDateTime(json['updatedTime']),
     );
   }
 }
