@@ -53,6 +53,13 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _deleteSelectedItem() {
+    setState(() {
+      _memos = _memos.where((e) => !e.isSelected).toList();
+      _saveData();
+    });
+  }
+
   // DateTime→String
   String getDateTimeToString(DateTime now) {
     DateFormat outputFormat = DateFormat('yyyy-MM-dd HH:mm:ss');
@@ -225,18 +232,30 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     child: Card(
-                      child: ListTile(
-                        title: Text(_memos[index].content),
-                        trailing: Text('${item.createdTime}'),
-                        onTap: () async {
-                          await Navigator.push(
-                              _,
-                              MaterialPageRoute(
-                                builder: (context) => EditPage(item, index),
-                              ));
-                          _getData();
-                        },
-                      ),
+                      child: isEditing
+                          ? CheckboxListTile(
+                              title: Text('${item.content}'),
+                              value: item.isSelected,
+                              onChanged: (value) {
+                                setState(() {
+                                  item.isSelected = value!;
+                                  print('${item.isSelected}');
+                                });
+                              },
+                            )
+                          : ListTile(
+                              title: Text('${item.content}'),
+                              trailing: Text('${item.createdTime}'),
+                              onTap: () async {
+                                await Navigator.push(
+                                    _,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          EditPage(item, index),
+                                    ));
+                                _getData();
+                              },
+                            ),
                     ),
                   );
                 },
@@ -268,7 +287,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         onPrimary: Colors.white, // foreground
                       ),
                       child: const Icon(Icons.remove),
-                      onPressed: () {},
+                      onPressed: _deleteSelectedItem,
                       onLongPress: () {
                         setState(() {
                           _memos = [];
