@@ -92,6 +92,12 @@ class _MyHomePageState extends State<MyHomePage> {
     print('Geiitng json $memoJson');
     print('Setting memos $_memos');
   }
+
+// データの全削除
+  Future<void> _deleteData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('memo');
+  }
   // ##############################################################
 
   @override
@@ -239,12 +245,39 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _addItem(_myController.text);
-          _myController.clear();
-        },
-        child: const Icon(Icons.add),
+      floatingActionButton: Column(
+        verticalDirection: VerticalDirection.up, // childrenの先頭を下に配置
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          FloatingActionButton(
+            // onPressedでボタンが押されたらテキストフィールドの内容を取得して、アイテムに追加
+            onPressed: () {
+              _addItem(_myController.text);
+              // テキストフィールドの内容をクリア
+              _myController.clear();
+            },
+            child: const Icon(Icons.add),
+          ),
+          isEditing
+              ? Container(
+                  // 余白のためContainerでラップ
+                  margin: EdgeInsets.only(bottom: 16.0),
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.red, // background
+                        onPrimary: Colors.white, // foreground
+                      ),
+                      child: const Icon(Icons.remove),
+                      onPressed: () {},
+                      onLongPress: () {
+                        setState(() {
+                          _memos = [];
+                          _deleteData();
+                        });
+                      }),
+                )
+              : SizedBox(),
+        ],
       ),
     );
   }
