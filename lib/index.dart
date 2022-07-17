@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memo_app_flutter/model/memo.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -12,23 +13,25 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final _myController = TextEditingController();
   // データ格納用リスト
-  List<String> _items = [];
+  List<Memo> _memos = [];
 
-  void _addItem(String inputtext) {
+  void _addItem(String _inputtext) {
     setState(() {
-      _items.add(inputtext);
-      print(_items);
+      Memo memo = Memo(
+        content: _inputtext,
+        createdTime: DateTime.now(),
+      );
+      _memos.add(memo);
     });
   }
 
   void _deleteItem(_i) {
     setState(() {
-      _items.removeAt(_i);
+      _memos.removeAt(_i);
     });
   }
 
   @override
-  // widgetの破棄時にコントローラも破棄する
   void dispose() {
     _myController.dispose();
     super.dispose();
@@ -53,9 +56,9 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: _items.length,
+                itemCount: _memos.length,
                 itemBuilder: (_, int index) {
-                  final item = _items[index];
+                  final item = _memos[index];
 
                   return Dismissible(
                     key: ObjectKey(item),
@@ -73,7 +76,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     child: Card(
                       child: ListTile(
-                        title: Text(_items[index]),
+                        title: Text(_memos[index].content),
+                        trailing: Text('${item.createdTime}'),
                       ),
                     ),
                   );
