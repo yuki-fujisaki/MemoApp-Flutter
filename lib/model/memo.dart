@@ -1,10 +1,9 @@
 import 'package:intl/intl.dart';
 
+// String→DateTime変換
 DateTime getDateTime(String datetimeStr) {
   final _dateFormatter = DateFormat('yyyy-MM-dd HH:mm:ss');
   DateTime result;
-
-  // String→DateTime変換
   result = _dateFormatter.parse(datetimeStr);
   return result;
 }
