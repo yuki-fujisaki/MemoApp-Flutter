@@ -1,12 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'model/memo.dart';
 
-class EditPage extends StatelessWidget {
+class EditPage extends ConsumerWidget {
   EditPage(this.memo, this.index);
   final Memo memo;
   final int index;
@@ -37,7 +38,7 @@ class EditPage extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final _myController = TextEditingController(text: memo.content);
     return Scaffold(
       appBar: AppBar(
